@@ -6,7 +6,8 @@
 // entirely and just use numbers.
 enum layers {
   _BL = 0,
-  _FL
+  _NV,
+  _FN
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -20,18 +21,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |----|----|----|----|
  * | 1  | 2  | 3  |    |
  * |----|----|----| En |
- * |   0     | .  |    |
+ * | 0  | 0  | .  |    |
  * `-------------------'
  */
   [_BL] = LAYOUT(
-    MO(_FL),  KC_PSLS,  KC_PAST,   KC_PMNS, \
+    TG(_NV),  KC_PSLS,  KC_PAST,   LT(_FN, KC_PMNS), \
     KC_P7,    KC_P8,    KC_P9,              \
     KC_P4,    KC_P5,    KC_P6,     KC_PPLS, \
     KC_P1,    KC_P2,    KC_P3,              \
     KC_P0,    KC_P0,    KC_PDOT,   KC_PENT
   ),
 
-/* Keymap _FL: Function Layer
+/* Keymap _NV: Navigation layer
+ * ,-------------------.
+ * |INS |HOME|PGUP|    |
+ * |----|----|----|----|
+ * |DEL |END |PGDN|    |
+ * |----|----|----|    |
+ * |    |    |    |    |
+ * |----|----|----|----|
+ * |    | UP |    |    |
+ * |----|----|----|    |
+ * |LEFT|DOWN|RIGH|    |
+ * `-------------------'
+ */
+  [_NV] = LAYOUT(
+    _______,  KC_HOME,  KC_PGUP,   _______, \
+    KC_DEL,   KC_END,   KC_PGDN,            \
+    _______,  _______,  _______,   _______, \
+    _______,  KC_UP,    _______,            \
+    KC_LEFT,  KC_DOWN,  KC_RGHT,   _______
+  ),
+
+/* Keymap _FN: Function Layer
  * ,-------------------.
  * |    |RGBP|RTOG|    |
  * |----|----|----|----|
@@ -44,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |         |RST |    |
  * `-------------------'
  */
-  [_FL] = LAYOUT(
-    _______,  RGB_M_P,  RGB_TOG,   _______, \
-    RGB_HUD,  RGB_HUI,  RGB_MOD,            \
+  [_FN] = LAYOUT(
+    RGB_MOD,  RGB_M_P,  RGB_TOG,   _______, \
+    RGB_HUD,  RGB_HUI,  _______,            \
     RGB_SAD,  RGB_SAI,  _______,   _______, \
     RGB_VAD,  RGB_VAI,  _______,            \
     _______,  _______,  RESET,     _______
@@ -65,7 +87,10 @@ void oled_task_user(void) {
     case _BL:
       oled_write_ln_P(PSTR("BL"), false);
       break;
-    case _FL:
+    case _NV:
+      oled_write_ln_P(PSTR("NV"), false);
+      break;
+    case _FN:
       oled_write_ln_P(PSTR("FN"), false);
       break;
     default:

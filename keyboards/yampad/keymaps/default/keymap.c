@@ -83,40 +83,43 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;  // flips the display 270 degrees
 }
 
-static char led_buf[25] = "LED state ready.\n";
 void oled_task_user(void) {
   // Host Keyboard Layer Status
-  oled_write_P(PSTR("Layer: "), false);
+  oled_write_P(PSTR("Layer"), false);
   switch (biton32(layer_state)) {
     case _BL:
-      oled_write_ln_P(PSTR("BAS"), false);
+      oled_write_ln_P(PSTR(" BAS"), false);
       break;
     case _NV:
-      oled_write_ln_P(PSTR("NAV"), false);
+      oled_write_ln_P(PSTR(" NAV"), false);
       break;
     case _FN:
-      oled_write_ln_P(PSTR("RGB"), false);
+      oled_write_ln_P(PSTR(" RGB"), false);
       break;
     default:
       // Or use the write_ln shortcut over adding '\n' to the end of your string
-      oled_write_ln_P(PSTR("UND"), false);
+      oled_write_ln_P(PSTR(" UND"), false);
   }
 
   // Host Keyboard LED Status
   uint8_t led_usb_state = host_keyboard_leds();
-  oled_write_ln_P(PSTR(""), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_NUM_LOCK) ? PSTR("* Num") : PSTR("  Num"), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("* Cap") : PSTR("  Cap"), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("* Scr") : PSTR("  Scr"), false);
-  oled_write_ln_P(PSTR(""), false);
+  oled_write_P(PSTR("-----"), false);
+  oled_write_P(PSTR("Stats"), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_NUM_LOCK) ? PSTR("num:*") : PSTR("num:."), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("cap:*") : PSTR("cap:."), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("scr:*") : PSTR("scr:."), false);
 
   // Host Keyboard RGB backlight status
-  snprintf(led_buf, sizeof(led_buf) - 1, "LED:%cM%2d\nhsv:\n%2d\n%2d\n%2d",
+  static char led_buf[29];
+  snprintf(led_buf, sizeof(led_buf) - 1, "RGB:%cM: %2d\nh: %2ds: %2dv: %2d\n",
       rgblight_config.enable ? '*' : '.', (uint8_t)rgblight_config.mode,
       (uint8_t)(rgblight_config.hue / RGBLIGHT_HUE_STEP),
       (uint8_t)(rgblight_config.sat / RGBLIGHT_SAT_STEP),
       (uint8_t)(rgblight_config.val / RGBLIGHT_VAL_STEP));
 
+  //oled_write_ln_P(PSTR(""), false);
+  oled_write_P(PSTR("-----"), false);
+  oled_write_P(PSTR("Light"), false);
   oled_write(led_buf, false);
 }
 #endif

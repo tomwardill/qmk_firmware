@@ -12,9 +12,7 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap _BL: (Base Layer) Default Layer
  * ,-------------------.
- * |Esc |TAB | FN | BS |
- * |----|----|----|----|
- * | NL | /  | *  | -  |
+ * | MO | /  | *  | -  |
  * |----|----|----|----|
  * | 7  | 8  | 9  |    |
  * |----|----|----| +  |
@@ -35,24 +33,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keymap _FL: Function Layer
  * ,-------------------.
- * |RGBT|    |    |    |
+ * |    |RGBP|RTOG|    |
  * |----|----|----|----|
- * |RGBM|RGBP|BTOG|    |
- * |----|----|----|----|
- * |HUD |HUI |BON |    |
+ * |HUD |HUI |RMOD|    |
  * |----|----|----|    |
- * |SAD |SAI |BOFF|    |
+ * |SAD |SAI |    |    |
  * |----|----|----|----|
- * |VAD |VAS |BSTP|    |
+ * |VAD |VAS |    |    |
  * |----|----|----|    |
  * |         |RST |    |
  * `-------------------'
  */
   [_FL] = LAYOUT(
-    _______,  RGB_M_P,  RGB_MOD,   _______, \
-    RGB_HUD,  RGB_HUI,  _______,            \
+    _______,  RGB_M_P,  RGB_TOG,   _______, \
+    RGB_HUD,  RGB_HUI,  RGB_MOD,            \
     RGB_SAD,  RGB_SAI,  _______,   _______, \
     RGB_VAD,  RGB_VAI,  _______,            \
-    _______,  _______,  _______,   _______
+    _______,  _______,  RESET,     _______
   ),
 };

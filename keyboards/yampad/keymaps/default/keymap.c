@@ -77,10 +77,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef OLED_DRIVER_ENABLE
+extern rgblight_config_t rgblight_config;
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;  // flips the display 270 degrees
 }
 
+static char led_buf[25] = "LED state ready.\n";
 void oled_task_user(void) {
   // Host Keyboard Layer Status
   oled_write_P(PSTR("Layer: "), false);
@@ -106,5 +109,14 @@ void oled_task_user(void) {
   oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("* Cap") : PSTR("  Cap"), false);
   oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("* Scr") : PSTR("  Scr"), false);
   oled_write_ln_P(PSTR(""), false);
+
+  // Host Keyboard RGB backlight status
+  snprintf(led_buf, sizeof(led_buf) - 1, "LED:%cM%2d\nhsv:\n%2d\n%2d\n%2d",
+      rgblight_config.enable ? '*' : '.', (uint8_t)rgblight_config.mode,
+      (uint8_t)(rgblight_config.hue / RGBLIGHT_HUE_STEP),
+      (uint8_t)(rgblight_config.sat / RGBLIGHT_SAT_STEP),
+      (uint8_t)(rgblight_config.val / RGBLIGHT_VAL_STEP));
+
+  oled_write(led_buf, false);
 }
 #endif

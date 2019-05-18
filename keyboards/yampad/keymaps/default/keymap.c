@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+extern keymap_config_t keymap_config;
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -13,7 +14,7 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap _BL: (Base Layer) Default Layer
  * ,-------------------.
- * | MO | /  | *  | -  |
+ * | NV | /  | *  |-/FN|
  * |----|----|----|----|
  * | 7  | 8  | 9  |    |
  * |----|----|----| +  |
@@ -46,32 +47,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-------------------'
  */
   [_NV] = LAYOUT(
-    _______,  KC_HOME,  KC_PGUP,   _______, \
+    KC_INS,   KC_HOME,  KC_PGUP,   TG(_NV), \
     KC_DEL,   KC_END,   KC_PGDN,            \
-    _______,  _______,  _______,   _______, \
-    _______,  KC_UP,    _______,            \
-    KC_LEFT,  KC_DOWN,  KC_RGHT,   _______
+    XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX, \
+    XXXXXXX,  KC_UP,    XXXXXXX,            \
+    KC_LEFT,  KC_DOWN,  KC_RGHT,   XXXXXXX
   ),
 
-/* Keymap _FN: Function Layer
+/* Keymap _FN: RGB Function Layer
  * ,-------------------.
- * |    |RGBP|RTOG|    |
+ * |RMOD|RGBP|RTOG| FN |
  * |----|----|----|----|
- * |HUD |HUI |RMOD|    |
+ * |HUD |HUI |    |    |
  * |----|----|----|    |
  * |SAD |SAI |    |    |
  * |----|----|----|----|
  * |VAD |VAS |    |    |
  * |----|----|----|    |
- * |         |RST |    |
+ * |RST |    |    |    |
  * `-------------------'
  */
   [_FN] = LAYOUT(
     RGB_MOD,  RGB_M_P,  RGB_TOG,   _______, \
-    RGB_HUD,  RGB_HUI,  _______,            \
-    RGB_SAD,  RGB_SAI,  _______,   _______, \
-    RGB_VAD,  RGB_VAI,  _______,            \
-    _______,  _______,  RESET,     _______
+    RGB_HUD,  RGB_HUI,  XXXXXXX,            \
+    RGB_SAD,  RGB_SAI,  XXXXXXX,   XXXXXXX, \
+    RGB_VAD,  RGB_VAI,  XXXXXXX,            \
+    RESET,    XXXXXXX,  XXXXXXX,   XXXXXXX
   ),
 };
 

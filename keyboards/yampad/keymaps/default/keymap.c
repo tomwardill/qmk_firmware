@@ -86,25 +86,25 @@ void oled_task_user(void) {
   oled_write_P(PSTR("Layer: "), false);
   switch (biton32(layer_state)) {
     case _BL:
-      oled_write_ln_P(PSTR("BL"), false);
+      oled_write_ln_P(PSTR("BAS"), false);
       break;
     case _NV:
-      oled_write_ln_P(PSTR("NV"), false);
+      oled_write_ln_P(PSTR("NAV"), false);
       break;
     case _FN:
-      oled_write_ln_P(PSTR("FN"), false);
+      oled_write_ln_P(PSTR("RGB"), false);
       break;
     default:
       // Or use the write_ln shortcut over adding '\n' to the end of your string
-      oled_write_ln_P(PSTR("Undefined"), false);
+      oled_write_ln_P(PSTR("UND"), false);
   }
 
   // Host Keyboard LED Status
   uint8_t led_usb_state = host_keyboard_leds();
   oled_write_ln_P(PSTR(""), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_NUM_LOCK) ? PSTR("* NUM") : PSTR("  NUM"), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("* CAP") : PSTR("  CAP"), false);
-  oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("* SCR") : PSTR("  SCR"), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_NUM_LOCK) ? PSTR("* Num") : PSTR("  Num"), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("* Cap") : PSTR("  Cap"), false);
+  oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("* Scr") : PSTR("  Scr"), false);
   oled_write_ln_P(PSTR(""), false);
 }
 #endif

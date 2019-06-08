@@ -11,6 +11,8 @@
 #define blu_led_on    PORTF &= ~(1<<4)
 #define grn_led_off   PORTD |= (1<<1)
 #define grn_led_on    PORTD &= ~(1<<1)
+#define wht_led_off   PORTD |= (1<<0)
+#define wht_led_on    PORTD &= ~(1<<0)
 
 #define set_led_off     red_led_off; grn_led_off; blu_led_off
 #define set_led_red     red_led_on;  grn_led_off; blu_led_off

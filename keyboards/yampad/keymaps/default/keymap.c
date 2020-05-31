@@ -131,7 +131,7 @@ void oled_task_user(void) {
   oled_write_P(PSTR("-----"), false);
   oled_write_P(PSTR("Light"), false);
 
-  static char led_buf[29];
+  static char led_buf[30];
   snprintf(led_buf, sizeof(led_buf) - 1, "RGB:%cM: %2d\nh: %2ds: %2dv: %2d\n",
       rgblight_config.enable ? '*' : '.', (uint8_t)rgblight_config.mode,
       (uint8_t)(rgblight_config.hue / RGBLIGHT_HUE_STEP),

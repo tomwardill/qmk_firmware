@@ -128,16 +128,15 @@ void oled_task_user(void) {
   oled_write_P(led_usb_state & (1<<USB_LED_SCROLL_LOCK) ? PSTR("scr:*") : PSTR("scr:."), false);
 
   // Host Keyboard RGB backlight status
+  oled_write_P(PSTR("-----"), false);
+  oled_write_P(PSTR("Light"), false);
+
   static char led_buf[29];
   snprintf(led_buf, sizeof(led_buf) - 1, "RGB:%cM: %2d\nh: %2ds: %2dv: %2d\n",
       rgblight_config.enable ? '*' : '.', (uint8_t)rgblight_config.mode,
       (uint8_t)(rgblight_config.hue / RGBLIGHT_HUE_STEP),
       (uint8_t)(rgblight_config.sat / RGBLIGHT_SAT_STEP),
       (uint8_t)(rgblight_config.val / RGBLIGHT_VAL_STEP));
-
-  //oled_write_ln_P(PSTR(""), false);
-  oled_write_P(PSTR("-----"), false);
-  oled_write_P(PSTR("Light"), false);
   oled_write(led_buf, false);
 }
 #endif

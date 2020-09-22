@@ -7,12 +7,20 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 enum layers {
   _BL = 0,
+  _RJ,
   _NV,
   _FN
 };
 
 enum custom_keycodes {
-  KC_DBL0 = SAFE_RANGE,
+  KC_SMILE = SAFE_RANGE,
+  KC_PLUSONE,
+  KC_SHRUG,
+  KC_LAUGHING,
+  KC_R_SMILE,
+  KC_R_PLUSONE,
+  KC_R_SHRUG,
+  KC_R_LAUGHING
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -30,11 +38,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-------------------'
  */
   [_BL] = LAYOUT(
-    TG(_NV),  KC_PSLS,  KC_PAST,   LT(_FN, KC_PMNS), \
+    MO(_RJ),  KC_PSLS,  KC_PAST,   LT(_FN, KC_PMNS), \
     KC_P7,    KC_P8,    KC_P9,              \
     KC_P4,    KC_P5,    KC_P6,     KC_PPLS, \
-    KC_P1,    KC_P2,    KC_P3,              \
-    KC_P0,    KC_DBL0,  KC_PDOT,   KC_PENT
+    KC_P1,    KC_P2,    KC_LAUGHING,              \
+    KC_SHRUG,    KC_SMILE,  KC_PLUSONE,   KC_PENT
+  ),
+
+  [_RJ] = LAYOUT(
+    XXXXXXX, XXXXXXX, XXXXXXX, TG(_BL), \
+    KC_A, XXXXXXX, XXXXXXX,          \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+    XXXXXXX, XXXXXXX, KC_R_LAUGHING,          \
+    KC_R_SHRUG, KC_R_SMILE, KC_R_PLUSONE, XXXXXXX
   ),
 
 /* Keymap _NV: Navigation layer
@@ -82,9 +98,67 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case KC_DBL0:
+    case KC_SMILE:
       if (record->event.pressed) {
-        SEND_STRING("00");
+        SEND_STRING(":smile:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_PLUSONE:
+      if (record->event.pressed) {
+        SEND_STRING(":+1:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_SHRUG:
+      if (record->event.pressed) {
+        SEND_STRING(":man_shrugging:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_LAUGHING:
+      if (record->event.pressed) {
+        SEND_STRING(":laughing:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+
+    case KC_R_SMILE:
+      if (record->event.pressed) {
+        SEND_STRING("+:smile:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_R_PLUSONE:
+      if (record->event.pressed) {
+        SEND_STRING("+:+1:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_R_SHRUG:
+      if (record->event.pressed) {
+        SEND_STRING("+:man_shrugging:");
+        tap_code(KC_ENTER);
+      } else {
+        // when keycode KC_DBL0 is released
+      }
+      break;
+    case KC_R_LAUGHING:
+      if (record->event.pressed) {
+        SEND_STRING("+:laughing:");
+        tap_code(KC_ENTER);
       } else {
         // when keycode KC_DBL0 is released
       }
@@ -106,7 +180,10 @@ void oled_task_user(void) {
   oled_write_P(PSTR("Layer"), false);
   switch (biton32(layer_state)) {
     case _BL:
-      oled_write_ln_P(PSTR(" BAS"), false);
+      oled_write_ln_P(PSTR(" EMJ"), false);
+      break;
+    case _RJ:
+      oled_write_ln_P(PSTR(" REA"), false);
       break;
     case _NV:
       oled_write_ln_P(PSTR(" NAV"), false);
